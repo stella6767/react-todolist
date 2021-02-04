@@ -1,6 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useTodoDispatch, useTodoNextId, useTodoState } from "../TodoContext";
 
 const TodoHeadBlock = styled.div`
   padding-top: 48px;
@@ -27,16 +27,13 @@ const TodoHeadBlock = styled.div`
 `;
 
 const TodoHead = () => {
-  const todos = useTodoState();
+  //const todos = useTodoState();
+  const { todos } = useSelector((store) => store);
   console.log(todos);
-  const todos2 = useTodoDispatch();
-  console.log(todos2);
-  const todos3 = useTodoNextId();
-  console.log(todos3);
 
   const undoneTasks = todos.filter((todo) => !todo.done); //깊은 복사함수를 써서 todo 객체?의 값 중 done이 false의 개수
-  const today = new Date();
 
+  const today = new Date();
   const dateString = today.toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "long",

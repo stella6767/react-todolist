@@ -1,6 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useTodoState } from "../TodoContext";
 import TodoItem from "./TodoItem";
 
 const TodoListBlock = styled.div`
@@ -11,7 +11,14 @@ const TodoListBlock = styled.div`
 `;
 
 const TodoList = () => {
-  const todos = useTodoState();
+  const { todos } = useSelector((store) => store);
+
+  todos.forEach((todo) => {
+    {
+      console.log(todo.id);
+    }
+  });
+
   return (
     <TodoListBlock>
       {todos.map((todo) => (
@@ -20,6 +27,7 @@ const TodoList = () => {
           id={todo.id}
           text={todo.text}
           done={todo.done}
+          todo={{ ...todo }}
         />
       ))}
     </TodoListBlock>
