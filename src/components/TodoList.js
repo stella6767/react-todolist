@@ -13,23 +13,18 @@ const TodoListBlock = styled.div`
 const TodoList = () => {
   const { todos } = useSelector((store) => store);
 
-  todos.forEach((todo) => {
-    {
-      console.log(todo.id);
-    }
-  });
+  // todos.forEach((todo) => {
+  //   {
+  //     console.log(todo.id);
+  //   }
+  // });
 
   return (
     <TodoListBlock>
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          id={todo.id}
-          text={todo.text}
-          done={todo.done}
-          todo={{ ...todo }}
-        />
-      ))}
+      {todos.map((todo) => {
+        console.log(1, todo);
+        return <TodoItem key={todo.id} todo={todo} />;
+      })}
     </TodoListBlock>
   );
 };

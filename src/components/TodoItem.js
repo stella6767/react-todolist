@@ -61,22 +61,15 @@ const Text = styled.div`
 //react-icons 에서 MdDone 과 MdDelete
 const TodoItem = ({ todo }) => {
   const dispathcer = useDispatch();
-
-  const id = todo.id;
-  const done = todo.done;
-  const text = todo.text;
-  console.log(id);
-
-  const onToggle = () => dispathcer(toggle(id));
-  const onRemove = () => dispathcer(remove(id));
+  console.log(todo.id);
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={() => dispathcer(toggle(id))}>
-        {done && <MdDone />}
+      <CheckCircle done={todo.done} onClick={() => dispathcer(toggle(todo.id))}>
+        {todo.done && <MdDone />}
       </CheckCircle>
-      <Text done={done}>{text}</Text>
-      <Remove onClick={onRemove}>
+      <Text done={todo.done}>{todo.text}</Text>
+      <Remove onClick={() => dispathcer(remove(todo.id))}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>

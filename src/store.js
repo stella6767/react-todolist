@@ -4,8 +4,8 @@ import { useRef } from "react";
 export const create = (todo) => ({
   type: "CREATE",
   todo: {
-    id: 5, //일단은 5
-    text: todo.value,
+    id: todo.id, //일단은 5
+    text: todo.text,
     done: false,
   }, //여러개 변수를 넘길 수 있다.
 });
@@ -14,9 +14,9 @@ export const toggle = (data) => ({
   type: "TOGGLE",
   id: data,
 });
-export const remove = (id) => ({
+export const remove = (data) => ({
   type: "REMOVE",
-  id: id,
+  id: data,
 });
 
 //const nextId = useRef(5);
@@ -45,6 +45,7 @@ const initstate = {
       done: false,
     },
   ],
+  nextId: 5,
 };
 
 //액션의 결과를 걸러내는 친구
@@ -52,13 +53,20 @@ const initstate = {
 const reducer = (state = initstate, action) => {
   switch (action.type) {
     case "CREATE":
-      return state.todos.concat(action.todo);
+      return { todos: state.todos.concat(action.todo) };
     case "TOGGLE":
-      return state.todos.map((todo) =>
+      let newState = state.todos.map((todo) =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
       );
+      console.log("newState", newState);
+      console.log("state.todos", state.todos);
+      // let test = [...state.todos, ...newState];  //배열은 덮어쓰기가 안 됨..
+      // console.log("test", test);
+      return {
+        todos: [...newState], //내가 return 할 때, 키 값을 안 줘서 오류가 남ㅠㅠㅠㅠ
+      };
     case "REMOVE":
-      return state.todos.filter((todo) => todo.id !== action.id);
+      return { todos: state.todos.filter((todo) => todo.id !== action.id) };
     default:
       return state;
   }

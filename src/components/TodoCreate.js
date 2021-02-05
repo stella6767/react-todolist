@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { MdAdd } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { create } from "../store";
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -79,22 +80,25 @@ const Input = styled.input`
 const TodoCreate = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const { nextId } = useSelector((store) => store);
 
   const dispathcer = useDispatch();
-
-  const create = () =>
-    dispathcer(
-      create({
-        id: 6,
-        text: value,
-        done: false,
-      })
-    );
 
   const onToggle = () => setOpen(!open);
   const onChange = (e) => setValue(e.target.value);
   const onSubmit = (e) => {
     e.preventDefault(); // 새로고침 방지
+
+    console.log("value", value);
+
+    dispathcer(
+      create({
+        id: nextId,
+        text: value,
+        done: false,
+      })
+    );
+
     setValue("");
     setOpen(false);
   };
